@@ -13,3 +13,9 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
+
+minio:
+  endpointUrl: http://192.168.6.101:9000
+  accessKey: admin
+  secreKey: admin123456
+  bucketName: gmall

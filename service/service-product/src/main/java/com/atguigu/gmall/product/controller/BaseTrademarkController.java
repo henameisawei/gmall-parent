@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author he
  * @date2022/8/23
@@ -47,5 +49,11 @@ public class BaseTrademarkController {
     public Result deletebaseTrademark(@PathVariable("tid")Long tid){
         baseTrademarkService.removeById(tid);
         return Result.ok();
+    }
+
+    @GetMapping("/baseTrademark/getTrademarkList")
+    public Result<List<BaseTrademark>> getTrademarkList() {
+        List<BaseTrademark> trademarkList = baseTrademarkService.list(null);
+        return Result.ok(trademarkList);
     }
 }
