@@ -1,10 +1,7 @@
 package com.atguigu.gmall.product.controller;
 
 import com.atguigu.gmall.common.result.Result;
-import com.atguigu.gmall.model.product.BaseSaleAttr;
-import com.atguigu.gmall.model.product.SpuImage;
-import com.atguigu.gmall.model.product.SpuInfo;
-import com.atguigu.gmall.model.product.SpuSaleAttr;
+import com.atguigu.gmall.model.product.*;
 import com.atguigu.gmall.product.service.BaseSaleAttrService;
 import com.atguigu.gmall.product.service.SkuInfoService;
 import com.atguigu.gmall.product.service.SpuImageService;
@@ -38,25 +35,10 @@ public class SkuManageController {
 
         return Result.ok(baseSaleAttrList);
     }
-
-    //http://api.gmall.com/admin/product/{page}/{limit}?category3Id=61
-    @GetMapping("{page}/{size}")
-    public Result getSpuInfoPage(@PathVariable Long page,
-                                 @PathVariable Long size,
-                                 SpuInfo spuInfo){
-        // 创建一个Page 对象
-        Page<SpuInfo> spuInfoPage = new Page<>(page,size);
-        // 获取数据
-        IPage<SpuInfo> spuInfoPageList = skuInfoService.getSpuInfoPage(spuInfoPage, spuInfo);
-        // 将获取到的数据返回即可！
-        return Result.ok(spuInfoPageList);
-    }
-
-    //http://api.gmall.com/admin/product/saveSpuInfo
-    //sku 新增保存
-    @PostMapping("/saveSpuInfo")
-    public  Result SaveSpuInfo (@RequestBody SpuInfo spuInfo){
-        skuInfoService.saveSpuInfo(spuInfo);
+    @PostMapping("saveSkuInfo")
+    public Result saveSkuInfo(@RequestBody SkuInfo skuInfo) {
+        // 调用服务层
+        skuInfoService.saveSkuInfo(skuInfo);
         return Result.ok();
     }
 }

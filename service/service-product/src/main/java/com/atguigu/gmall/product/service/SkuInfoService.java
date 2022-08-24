@@ -14,7 +14,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface SkuInfoService extends IService<SkuInfo> {
 
-    IPage<SpuInfo> getSpuInfoPage(Page<SpuInfo> spuInfoPage, SpuInfo spuInfo);
 
-    void saveSpuInfo(SpuInfo spuInfo);
+    void saveSkuInfo(SkuInfo skuInfo);
 }

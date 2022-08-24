@@ -26,6 +26,8 @@ public class SpuManageController {
     SpuImageService spuImageService;
     @Autowired
     SpuSaleAttrService spuSaleAttrService;
+    @Autowired
+    SpuInfoService spuInfoService;
 
     @GetMapping("spuImageList/{spuId}")
     public Result<List<SpuImage>> getSpuImageList(@PathVariable("spuId") Long spuId) {
@@ -37,6 +39,26 @@ public class SpuManageController {
     public Result<List<SpuSaleAttr>> getSpuSaleAttrList(@PathVariable("spuId") Long spuId) {
         List<SpuSaleAttr> spuSaleAttrList = spuSaleAttrService.getSpuSaleAttrList(spuId);
         return Result.ok(spuSaleAttrList);
+    }
+
+    //http://api.gmall.com/admin/product/{page}/{limit}?category3Id=61
+    @GetMapping("{page}/{size}")
+    public Result getSpuInfoPage(@PathVariable Long page,
+                                 @PathVariable Long size,
+                                 SpuInfo spuInfo){
+        // 创建一个Page 对象
+        Page<SpuInfo> spuInfoPage = new Page<>(page,size);
+        // 获取数据
+        IPage<SpuInfo> spuInfoPageList = spuInfoService.getSpuInfoPage(spuInfoPage, spuInfo);
+        // 将获取到的数据返回即可！
+        return Result.ok(spuInfoPageList);
+    }
+    //http://api.gmall.com/admin/product/saveSpuInfo
+    //sku 新增保存
+    @PostMapping("/saveSpuInfo")
+    public  Result SaveSpuInfo (@RequestBody SpuInfo spuInfo){
+        spuInfoService.saveSpuInfo(spuInfo);
+        return Result.ok();
     }
 
 }
