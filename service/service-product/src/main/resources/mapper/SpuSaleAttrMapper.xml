@@ -39,4 +39,5 @@
         on  sa.spu_id=sv.spu_id and sa.base_sale_attr_id=sv.base_sale_attr_id
         where  sa.spu_id=#{spu_id}
     </select>
+
 </mapper>

@@ -6,6 +6,7 @@ import com.atguigu.gmall.model.product.SpuInfo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.apache.ibatis.annotations.Param;
 
 /**
 * @author Awei
@@ -16,4 +17,11 @@ public interface SkuInfoService extends IService<SkuInfo> {
 
 
     void saveSkuInfo(SkuInfo skuInfo);
+
+    IPage<SkuInfo> getPage(Page<SkuInfo> pageParam);
+
+    void onSale(@Param("skuId") Long skuId);
+
+    void cancelSale(@Param("skuId") Long skuId);
+
 }

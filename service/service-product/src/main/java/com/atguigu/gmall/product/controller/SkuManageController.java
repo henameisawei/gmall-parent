@@ -24,21 +24,41 @@ public class SkuManageController {
 
     @Autowired
     private SkuInfoService skuInfoService;
-    @Autowired
-    private BaseSaleAttrService baseSaleAttrService;
 
-    //sku 新增时属性选择
-    @GetMapping("baseSaleAttrList")
-    public Result baseSaleAttrList(){
-        // 查询所有的销售属性集合
-        List<BaseSaleAttr> baseSaleAttrList = baseSaleAttrService.getBaseSaleAttrList();
-
-        return Result.ok(baseSaleAttrList);
-    }
+    //1.保存新增Sku信息
     @PostMapping("saveSkuInfo")
     public Result saveSkuInfo(@RequestBody SkuInfo skuInfo) {
         // 调用服务层
         skuInfoService.saveSkuInfo(skuInfo);
+        return Result.ok();
+    }
+
+    //2.sku分页展示
+    @GetMapping("/list/{page}/{limit}")
+    public Result index(
+            @PathVariable Long page,
+            @PathVariable Long limit) {
+
+        Page<SkuInfo> pageParam = new Page<>(page, limit);
+        IPage<SkuInfo> pageModel = skuInfoService.getPage(pageParam);
+        // skuInfoService.page(pageParam);
+
+        return Result.ok(pageModel);
+    }
+
+    //3.商品上架
+    @GetMapping("/onSale/{skuId}")
+    public Result onSale(@PathVariable("skuId") Long skuId) {
+        skuInfoService.onSale(skuId);
+        return Result.ok();
+    }
+
+    //4.商品下架
+    @GetMapping("/cancelSale/{skuId}")
+    public Result cancelSale(@PathVariable("skuId") Long skuId) {
+        skuInfoService.cancelSale(skuId);
+
+
         return Result.ok();
     }
 }

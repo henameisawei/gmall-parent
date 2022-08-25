@@ -22,8 +22,8 @@ public class BaseTrademarkController {
     BaseTrademarkService baseTrademarkService;
 
     @GetMapping("/baseTrademark/{pn}/{size}")
-    public Result baseTrademark(@PathVariable("pn")Long pn,
-                                @PathVariable("size")Long size){
+    public Result baseTrademark(@PathVariable("pn") Long pn,
+                                @PathVariable("size") Long size) {
         Page<BaseTrademark> page = new Page<>(pn, size);
         Page<BaseTrademark> baseTrademarkPage = baseTrademarkService.page(page);
 
@@ -31,22 +31,25 @@ public class BaseTrademarkController {
     }
 
     @GetMapping("/baseTrademark/get/{id}")
-    public Result getBaseTrademark(@PathVariable("id")Long id){
+    public Result getBaseTrademark(@PathVariable("id") Long id) {
         BaseTrademark trademark = baseTrademarkService.getById(id);
         return Result.ok(trademark);
     }
+
     @PutMapping("/baseTrademark/update")
-    public Result updatebaseTrademark(@RequestBody BaseTrademark trademark){
+    public Result updatebaseTrademark(@RequestBody BaseTrademark trademark) {
         baseTrademarkService.updateById(trademark);
         return Result.ok();
     }
+
     @PostMapping("/baseTrademark/save")
-    public Result savebaseTrademark(@RequestBody BaseTrademark trademark){
+    public Result savebaseTrademark(@RequestBody BaseTrademark trademark) {
         baseTrademarkService.save(trademark);
         return Result.ok();
     }
+
     @DeleteMapping("/baseTrademark/remove/{tid}")
-    public Result deletebaseTrademark(@PathVariable("tid")Long tid){
+    public Result deletebaseTrademark(@PathVariable("tid") Long tid) {
         baseTrademarkService.removeById(tid);
         return Result.ok();
     }

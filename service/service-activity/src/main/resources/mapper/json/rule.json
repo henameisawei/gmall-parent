@@ -1,0 +1,16 @@
+{
+  "code": 200,
+  "message": "成功",
+  "data": {
+    "trademarkList": [
+      {
+        "id": 1,
+        "createTime": "2021-12-10 01:31:41",
+        "updateTime": "2022-01-18 10:39:18",
+        "tmName": "小米",
+        "logoUrl": "http://47.93.148.192:8080/group1/M00/03/D9/rBHu8mHmKC6AQ-j2AAAb72A3EO0942.jpg"
+      }
+    ]
+  },
+  "ok": true
+}

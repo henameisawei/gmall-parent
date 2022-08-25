@@ -1,6 +1,7 @@
 package com.atguigu.gmall.product.controller;
 
 import com.atguigu.gmall.common.result.Result;
+import com.atguigu.gmall.product.service.FileuploadService;
 import com.atguigu.gmall.product.util.MinioProperties;
 import io.minio.BucketExistsArgs;
 import io.minio.MakeBucketArgs;
@@ -28,14 +29,17 @@ import java.util.UUID;
 @RequestMapping("/admin/product")
 @RestController
 public class FileuploadController {
+/*    @Autowired
+    MinioProperties minioProperties;*/
+
     @Autowired
-    MinioProperties minioProperties;
+    FileuploadService fileuploadService;
 
     @PostMapping("fileUpload")
-    public Result fileupload(@RequestPart("file") MultipartFile file) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+    public Result fileupload(@RequestPart("file") MultipartFile file) throws Exception {
 
-        //TODO 文件上传 怎么上传到Minio？
-        String url ="";
+
+      /*  String url ="";
         MinioClient minioClient =
                 MinioClient.builder()
                         .endpoint(minioProperties.getEndpointUrl())
@@ -46,9 +50,11 @@ public class FileuploadController {
             System.out.println(minioProperties.getBucketName()+"已存在");
         }else {
             minioClient.makeBucket(MakeBucketArgs.builder().bucket(minioProperties.getBucketName()).build());//创建捅
-        }
+        }*/
+        String url = fileuploadService.upload(file);
+        return Result.ok(url);
 
-        String fileName = System.currentTimeMillis()+ UUID.randomUUID().toString();//文件名
+       /* String fileName = System.currentTimeMillis()+ UUID.randomUUID().toString();//文件名
         minioClient.putObject(
                 PutObjectArgs.builder().bucket(minioProperties.getBucketName()).object(fileName).stream(
                         file.getInputStream(), file.getSize(), -1)
@@ -58,6 +64,6 @@ public class FileuploadController {
 
         System.out.println("url:\t"+url);
         //  将文件上传之后的路径返回给页面！
-        return Result.ok(url);
+        return Result.ok(url);*/
     }
 }

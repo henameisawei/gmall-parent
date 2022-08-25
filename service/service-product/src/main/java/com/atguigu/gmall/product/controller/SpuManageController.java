@@ -1,18 +1,20 @@
 package com.atguigu.gmall.product.controller;
 
 import com.atguigu.gmall.common.result.Result;
-import com.atguigu.gmall.model.product.BaseSaleAttr;
+
 import com.atguigu.gmall.model.product.SpuImage;
 import com.atguigu.gmall.model.product.SpuInfo;
 import com.atguigu.gmall.model.product.SpuSaleAttr;
 import com.atguigu.gmall.product.service.*;
-import com.atguigu.gmall.product.service.impl.SpuInfoServiceImpl;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author he
@@ -60,5 +62,7 @@ public class SpuManageController {
         spuInfoService.saveSpuInfo(spuInfo);
         return Result.ok();
     }
+//Library lib has broken classes paths:   E:\Sgu\2022\Study\Day01\lib [Fix]
+
 
 }

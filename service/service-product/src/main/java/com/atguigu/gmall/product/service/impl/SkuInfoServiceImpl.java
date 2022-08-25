@@ -71,6 +71,26 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo>
             }
         }
     }
+
+    @Override
+    public IPage<SkuInfo> getPage(Page<SkuInfo> pageParam) {
+        QueryWrapper<SkuInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("id");
+
+        IPage<SkuInfo> page = skuInfoMapper.selectPage(pageParam, queryWrapper);
+       
+        return page;
+    }
+
+    @Override
+    public void onSale(Long skuId) {
+        skuInfoMapper.updateIsSale(skuId,1);
+    }
+
+    @Override
+    public void cancelSale(Long skuId) {
+        skuInfoMapper.updateIsSale(skuId,0);
+    }
 }
 
 
