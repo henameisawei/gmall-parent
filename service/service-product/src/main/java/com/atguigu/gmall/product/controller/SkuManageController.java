@@ -25,6 +25,8 @@ public class SkuManageController {
     @Autowired
     private SkuInfoService skuInfoService;
 
+    //5.查询sku 细节信息
+
     //1.保存新增Sku信息
     @PostMapping("saveSkuInfo")
     public Result saveSkuInfo(@RequestBody SkuInfo skuInfo) {

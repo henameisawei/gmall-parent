@@ -1,7 +1,11 @@
 package com.atguigu.gmall.product.service.impl;
 
 import com.atguigu.gmall.model.product.*;
+import com.atguigu.gmall.model.to.CategoryViewTo;
+import com.atguigu.gmall.model.to.SkuDetailTo;
 import com.atguigu.gmall.product.mapper.*;
+import com.atguigu.gmall.product.service.SkuImageService;
+import com.atguigu.gmall.product.service.SpuSaleAttrService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -13,16 +17,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
-* @author Awei
-* @description 针对表【sku_info(库存单元表)】的数据库操作Service实现
-* @createDate 2022-08-23 17:46:45
-*/
+ * @author Awei
+ * @description 针对表【sku_info(库存单元表)】的数据库操作Service实现
+ * @createDate 2022-08-23 17:46:45
+ */
 @Service
 public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo>
-    implements SkuInfoService{
+        implements SkuInfoService {
     @Autowired
     SkuInfoMapper skuInfoMapper;
     @Autowired
@@ -78,18 +83,48 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo>
         queryWrapper.orderByDesc("id");
 
         IPage<SkuInfo> page = skuInfoMapper.selectPage(pageParam, queryWrapper);
-       
+
         return page;
     }
 
     @Override
     public void onSale(Long skuId) {
-        skuInfoMapper.updateIsSale(skuId,1);
+        skuInfoMapper.updateIsSale(skuId, 1);
     }
 
     @Override
     public void cancelSale(Long skuId) {
-        skuInfoMapper.updateIsSale(skuId,0);
+        skuInfoMapper.updateIsSale(skuId, 0);
+    }
+
+    @Autowired
+    SkuImageService skuImageService;
+    @Autowired
+    BaseCategory3Mapper baseCategory3Mapper;
+    @Autowired
+    SpuSaleAttrService spuSaleAttrService;
+
+    @Override
+    public SkuDetailTo getSkuDetail(Long skuId) {
+        SkuDetailTo detailTo = new SkuDetailTo();
+        //(√) 0、查询到skuInfo
+        SkuInfo skuInfo = skuInfoMapper.selectById(skuId);
+        //商品基本信息存放到skuDetailTo 中
+        detailTo.setSkuInfo(skuInfo);
+        //商品sku图片信息
+        List<SkuImage> imageList = skuImageService.getSkuImage(skuId);
+        skuInfo.setSkuImageList(imageList);
+        //商品完整的属性分类
+        CategoryViewTo categoryViewTo = baseCategory3Mapper.getCategoryView(skuInfo.getCategory3Id());
+        detailTo.setCategoryView(categoryViewTo);
+        //价格查询
+        BigDecimal price = skuInfoMapper.getRealPrice(skuId);
+        detailTo.setPrice(price);
+
+        List<SpuSaleAttr> saleAttrList = spuSaleAttrService.getSaleAttrAndValueMarkSku(skuInfo.getSpuId(), skuId);
+        detailTo.setSpuSaleAttrList(saleAttrList);
+        return detailTo;
+
     }
 }
 

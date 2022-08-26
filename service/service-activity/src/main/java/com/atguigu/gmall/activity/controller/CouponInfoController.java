@@ -3,6 +3,7 @@ package com.atguigu.gmall.activity.controller;
 import com.atguigu.gmall.activity.service.ActivityRuleService;
 import com.atguigu.gmall.activity.service.ActivitySkuService;
 import com.atguigu.gmall.activity.service.CouponInfoService;
+import com.atguigu.gmall.activity.service.CouponRangeService;
 import com.atguigu.gmall.common.result.Result;
 import com.atguigu.gmall.model.activity.ActivityRule;
 import com.atguigu.gmall.model.activity.ActivitySku;
@@ -29,10 +30,8 @@ public class CouponInfoController {
     @Autowired
     CouponInfoService couponInfoService;
 
-    //@Autowired
-    //ActivityRuleService activityRuleService;
     @Autowired
-    ActivitySkuService activitySkuService;
+    CouponRangeService couponRangeService;
 
 
     @GetMapping("/couponInfo/{page}/{limit}")
@@ -45,33 +44,24 @@ public class CouponInfoController {
         // skuInfoService.page(pageParam);
         return Result.ok(pageModel);
     }
+
     // http://192.168.6.1/admin/activity/couponInfo/get/2
     //查询信息回显
     @GetMapping("/couponInfo/get/{coupId}")
-    public  Result getCouponInfo (@PathVariable("coupId")long coupId){
+    public Result getCouponInfo(@PathVariable("coupId") long coupId) {
         CouponInfo couponInfo = couponInfoService.getById(coupId);
         return Result.ok(couponInfo);
     }
+
     // http://192.168.6.1/admin/activity/couponInfo/update
     //保存回显信息无Id
     @PutMapping("/couponInfo/update")
-    public  Result putCouponInfo (@RequestBody CouponInfo couponInfo ){
+    public Result putCouponInfo(@RequestBody CouponInfo couponInfo) {
         boolean b = couponInfoService.updateById(couponInfo);
         return Result.ok();
     }
 
     //http://192.168.6.1/admin/activity/couponInfo/findCouponRuleList/2
-    @GetMapping("/couponInfo/findCouponRuleList/{Id}")
-    public  Result findCouponRuleList (@PathVariable("Id")long Id){
-        /*QueryWrapper<ActivitySku> wrapper = new QueryWrapper<>();
-        wrapper.eq("activity_id",Id);
-
-        List<ActivitySku> trademarkList = activitySkuService.list(wrapper);
-        return Result.ok(trademarkList);*/
-        //todo
-        return  Result.ok();
-    }
-
 
 
 }

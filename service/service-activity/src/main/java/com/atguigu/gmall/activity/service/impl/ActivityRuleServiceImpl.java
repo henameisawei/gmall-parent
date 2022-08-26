@@ -1,11 +1,14 @@
 package com.atguigu.gmall.activity.service.impl;
 
 import com.atguigu.gmall.model.activity.ActivityRule;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import com.atguigu.gmall.activity.service.ActivityRuleService;
 import com.atguigu.gmall.activity.mapper.ActivityRuleMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
 * @author Awei
@@ -16,6 +19,12 @@ import org.springframework.stereotype.Service;
 public class ActivityRuleServiceImpl extends ServiceImpl<ActivityRuleMapper, ActivityRule>
     implements ActivityRuleService{
 
+    @Override
+    public List<ActivityRule> findActivityRuleList(long id) {
+        QueryWrapper<ActivityRule> wrapper = new QueryWrapper<>();
+        wrapper.eq("activity_id", id);
+        return this.list(wrapper);
+    }
 }
 
 
